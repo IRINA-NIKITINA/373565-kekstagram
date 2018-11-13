@@ -1,7 +1,7 @@
-# Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
+﻿# Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Ирина Самосадная](https://up.htmlacademy.ru/javascript/16/user/373565).
-* Наставник: `Неизвестно`.
+* Наставник: [Лев Балагуров](https://htmlacademy.ru/profile/id7786).
 
 ---
 
