@@ -48,11 +48,11 @@ var pictures = document.querySelector('.pictures');
 var fragment = document.createDocumentFragment();
 var template = document.querySelector('#picture').content.querySelector('a');
 
-for (var i = 0; i < COUNT_PHOTOS; i++) {
+for (var y = 0; y < COUNT_PHOTOS; y++) {
   var element = template.cloneNode(true);
-  element.querySelector('.picture__img').src = photos[i].url;
-  element.querySelector('.picture__likes').textContent = photos[i].likes + '';
-  element.querySelector('.picture__comments').textContent = photos[i].comments.length + '';
+  element.querySelector('.picture__img').src = photos[y].url;
+  element.querySelector('.picture__likes').textContent = photos[y].likes + '';
+  element.querySelector('.picture__comments').textContent = photos[y].comments.length + '';
 
   fragment.appendChild(element);
 }
@@ -67,9 +67,9 @@ bigPicture.querySelector('.likes-count').textContent = photos[0].likes + '';
 bigPicture.querySelector('.comments-count').textContent = photos[0].comments.length + '';
 
 var pools = bigPicture.querySelectorAll('.social__comment');
-for (var i = 0; i < photos[0].comments.length; i++) {
-  pools[i].querySelector('.social__picture').src = 'img/avatar-' + Math.round(Math.random() * 5 + 1) + '.svg';
-  pools[i].querySelector('.social__text').textContent = photos[0].comments[i];
+for (var k = 0; k < photos[0].comments.length; k++) {
+  pools[k].querySelector('.social__picture').src = 'img/avatar-' + Math.round(Math.random() * 5 + 1) + '.svg';
+  pools[k].querySelector('.social__text').textContent = photos[0].comments[k];
   if (photos[0].comments.length === 1) {
     bigPicture.querySelector('.social__comments').removeChild(pools[1]);
   }
