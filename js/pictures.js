@@ -26,6 +26,9 @@ var testDescriptions = [
   'Вот это тачка!'
 ];
 
+var pictures = document.querySelector('.pictures');
+var template = document.querySelector('#picture').content.querySelector('a');
+
 var getRandInRange = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
@@ -39,6 +42,26 @@ var getRandomItemsFromArray = function (arrAll) {
   return arr;
 };
 
+var renderPictures = function (templ, arr) {
+  var elements = [];
+  for (var i = 0; i < COUNT_PHOTOS; i++) {
+    var element = templ.cloneNode(true);
+    element.querySelector('.picture__img').src = arr[i].url;
+    element.querySelector('.picture__likes').textContent = arr[i].likes + '';
+    element.querySelector('.picture__comments').textContent = arr[i].comments.length + '';
+    elements.push(element);
+  }
+  return elements;
+};
+
+var addPictures = function (arr, block) {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < arr.length; i++) {
+    fragment.appendChild(arr[i]);
+  }
+  block.appendChild(fragment);
+};
+
 for (var i = 1; i <= COUNT_PHOTOS; i++) {
   var photo = {
     'url': 'photos/' + i + '.jpg',
@@ -50,20 +73,7 @@ for (var i = 1; i <= COUNT_PHOTOS; i++) {
   photos.push(photo);
 }
 
-var pictures = document.querySelector('.pictures');
-var fragment = document.createDocumentFragment();
-var template = document.querySelector('#picture').content.querySelector('a');
-
-for (var y = 0; y < COUNT_PHOTOS; y++) {
-  var element = template.cloneNode(true);
-  element.querySelector('.picture__img').src = photos[y].url;
-  element.querySelector('.picture__likes').textContent = photos[y].likes + '';
-  element.querySelector('.picture__comments').textContent = photos[y].comments.length + '';
-
-  fragment.appendChild(element);
-}
-
-pictures.appendChild(fragment);
+addPictures(renderPictures(template, photos), pictures);
 
 var bigPicture = document.querySelector('.big-picture');
 bigPicture.classList.remove('hidden');
@@ -73,9 +83,9 @@ bigPicture.querySelector('.likes-count').textContent = photos[0].likes + '';
 bigPicture.querySelector('.comments-count').textContent = photos[0].comments.length + '';
 
 var pools = bigPicture.querySelectorAll('.social__comment');
-for (var k = 0; k < photos[0].comments.length; k++) {
-  pools[k].querySelector('.social__picture').src = 'img/avatar-' + getRandInRange(MIN_AVATARS, MAX_AVATARS) + '.svg';
-  pools[k].querySelector('.social__text').textContent = photos[0].comments[k];
+for (var y = 0; y < photos[0].comments.length; y++) {
+  pools[y].querySelector('.social__picture').src = 'img/avatar-' + getRandInRange(MIN_AVATARS, MAX_AVATARS) + '.svg';
+  pools[y].querySelector('.social__text').textContent = photos[0].comments[y];
   if (photos[0].comments.length === 1) {
     bigPicture.querySelector('.social__comments').removeChild(pools[1]);
   }
