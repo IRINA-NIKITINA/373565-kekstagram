@@ -88,7 +88,7 @@ var addElementFromPhotos = function () {
 
     photos.push(photo);
   }
-}
+};
 
 var fillBigPicture = function (picture) {
   bigPicture.querySelector('.big-picture__img').children[0].src = picture.url;
@@ -99,9 +99,9 @@ var fillBigPicture = function (picture) {
   for (var y = 0; y < picture.comments.length; y++) {
     if (picture.comments.length === 1) {
       pools[1].classList.add('visually-hidden');
-     } else {
-        pools[1].classList.remove('visually-hidden');
-     }
+    } else {
+      pools[1].classList.remove('visually-hidden');
+    }
     pools[y].querySelector('.social__picture').src = 'img/avatar-' + getRandInRange(MIN_AVATARS, MAX_AVATARS) + '.svg';
     pools[y].querySelector('.social__text').textContent = picture.comments[y];
   }
@@ -136,7 +136,7 @@ var openPopup = function () {
 }
 };
 
-uploadFile.addEventListener ('change', function () {
+uploadFile.addEventListener('change', function () {
   openPopup();
 });
 
@@ -147,9 +147,9 @@ uploadFile.addEventListener('keydown', function (evt) {
 });
 
 var onPopupEscPress = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      closePopup();
-    }
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
+  }
 };
 
 var closePopup = function () {
@@ -169,9 +169,9 @@ uploadCancel.addEventListener('keydown', function (evt) {
 });
 
 var onBigPopupEscPress = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      closeBigPopup();
-    }
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeBigPopup();
+  }
 };
 
 var openBigPopup = function () {
@@ -199,7 +199,7 @@ effectLevelPin.addEventListener('mouseup', function () {
 
   var effect = getActiveRadio().value;
   if (effect === 'chrome') {
-    imgUploadPreview.style.filter = 'grayscale(' + effectLevelValue / MAX_PERCENT + ')'
+    imgUploadPreview.style.filter = 'grayscale(' + effectLevelValue / MAX_PERCENT + ')';
   } else if (effect === 'sepia') {
     imgUploadPreview.style.filter = 'sepia(' + effectLevelValue / MAX_PERCENT + ')';
   } else if (effect === 'marvin') {
@@ -208,11 +208,11 @@ effectLevelPin.addEventListener('mouseup', function () {
     imgUploadPreview.style.filter = 'blur(' + effectLevelValue / MAX_PERCENT * MAX_EFFECT + 'px)';
   } else if (effect === 'heat') {
     imgUploadPreview.style.filter = 'brightness(' + effectLevelValue / MAX_PERCENT * MAX_EFFECT + MIN_EFFECT + ')';
-  };
+  }
 });
 
 var onAddEffectsPreview = function (effectRadio, effectName) {
-  effectRadio.addEventListener ('click', function () {
+  effectRadio.addEventListener('click', function () {
     for (var i = 0; i < effectsRadio.length; i++) {
       imgUploadPreview.classList.remove('effects__preview--' + effectsRadio[i].value);
       imgUploadPreview.style = null;
