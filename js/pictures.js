@@ -133,7 +133,7 @@ var openPopup = function () {
   document.addEventListener('keydown', onPopupEscPress);
   if (getActiveRadio.value === 'none') {
     document.querySelector('.effect-level').classList.add('hidden');
-}
+  }
 };
 
 uploadFile.addEventListener('change', function () {
