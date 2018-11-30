@@ -40,9 +40,9 @@ var bigPicture = document.querySelector('.big-picture');
 var getRandInRange = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
-  
+
 // generating pictures dom elements and pushing them to .pictures element
-function generateAndAddPictures () {
+function generateAndAddPictures() {
   var getRandomItemsFromArray = function (arrAll) {
     var arr = [];
     var countComments = getRandInRange(MIN_COMMENTS, MAX_COMMENTS);
@@ -84,12 +84,12 @@ function generateAndAddPictures () {
   }
 
   var template = document.querySelector('#picture').content.querySelector('a');
-  
+
   addPictures(generatePictures(template, photos), pictures);
-};
+}
 
 // fill big picture
-function fillBigPicture (picture) {
+function fillBigPicture(picture) {
   bigPicture.querySelector('.big-picture__img').children[0].src = picture.url;
   bigPicture.querySelector('.likes-count').textContent = picture.likes + '';
   bigPicture.querySelector('.comments-count').textContent = picture.comments.length + '';
@@ -108,10 +108,10 @@ function fillBigPicture (picture) {
   bigPicture.querySelector('.social__caption').textContent = picture.description;
   bigPicture.querySelector('.social__comment-count').classList.add('visually-hidden');
   bigPicture.querySelector('.comments-loader').classList.add('visually-hidden');
-};
+}
 
 // upload and edit pictures
-function uploadAndEditPictures () {
+function uploadAndEditPictures() {
   var effectLevelPin = pictures.querySelector('.effect-level__pin');
 
   var getActiveRadio = function () {
@@ -170,14 +170,13 @@ function uploadAndEditPictures () {
   var imgUploadPreview = pictures.querySelector('.img-upload__preview').children[0];
   var effectsRadio = pictures.querySelectorAll('.effects__radio');
 
-  
   for (var i = 0; i < effectsRadio.length; i++) {
     onAddEffectsPreview(effectsRadio[i], effectsRadio[i].value + '');
   }
-};
+}
 
 // some keyboard&mouse shortcuts to upload
-function uploadKeyAndMouseBindings () {
+function uploadKeyAndMouseBindings() {
   var uploadFile = pictures.querySelector('#upload-file');
   var imgUploadOverlay = pictures.querySelector('.img-upload__overlay');
   var uploadCancel = pictures.querySelector('#upload-cancel');
@@ -208,10 +207,10 @@ function uploadKeyAndMouseBindings () {
       closePopup();
     }
   });
-};
+}
 
 // some keyboard&mouse shortcuts to big picture
-function bigPictureKeyAndMouseBindings () {
+function bigPictureKeyAndMouseBindings() {
   var bigPictureCancel = bigPicture.querySelector('#picture-cancel');
 
   var onPopupEscPress = function (evt) {
@@ -254,12 +253,12 @@ function bigPictureKeyAndMouseBindings () {
   };
 
   var arrPictures = pictures.querySelectorAll('.picture');
-  
+
   for (var i = 0; i < arrPictures.length; i++) {
     onFillBigPictureClick(arrPictures[i], i);
     onFillBigPictureEnter(arrPictures[i], i);
   }
-};
+}
 
 // main
 generateAndAddPictures();
