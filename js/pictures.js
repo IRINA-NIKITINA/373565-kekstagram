@@ -179,11 +179,11 @@ function uploadAndEditPictures() {
 function validForm() {
   var submitButton = document.querySelector('#upload-submit');
 
-  submitButton.addEventListener('click', function(evt){
+  submitButton.addEventListener('click', function () {
     var hashTagsInput = document.querySelector('.text__hashtags');
     var hashTags = hashTagsInput.value.split(' ');
 
-    for (var i = 0; i < hashTags.length; i++){
+    for (var i = 0; i < hashTags.length; i++) {
       var tag = hashTags[i];
 
       var count = 0;
@@ -218,9 +218,9 @@ function uploadKeyAndMouseBindings() {
   var imgUploadOverlay = pictures.querySelector('.img-upload__overlay');
   var uploadCancel = pictures.querySelector('#upload-cancel');
   var hashTagsInput = document.querySelector('.text__hashtags');
-  
+
   var onPopupEscPress = function (evt) {
-    if (hashTagsInput !== document.activeElement){
+    if (hashTagsInput !== document.activeElement) {
       if (evt.keyCode === ESC_KEYCODE) {
         closePopup();
       }
