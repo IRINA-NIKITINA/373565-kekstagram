@@ -179,14 +179,14 @@ function uploadAndEditPictures() {
 function validForm() {
   var submitButton = document.querySelector('#upload-submit');
   var hashTagsInput = document.querySelector('.text__hashtags');
-  
+
   submitButton.addEventListener('click', function () {
     var hashTags = hashTagsInput.value.split(/[\s]+/);
 
     for (var i = 0; i < hashTags.length; i++) {
       var tag = hashTags[i];
 
-      if (tag !== "") {
+      if (tag !== '') {
         var count = 0;
         for (var y = 0; y < hashTags.length; y++) {
           if (tag.toLowerCase() === hashTags[y].toLowerCase()) {
