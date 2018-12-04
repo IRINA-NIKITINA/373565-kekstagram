@@ -178,43 +178,50 @@ function uploadAndEditPictures() {
 // form validation
 function validForm() {
   var submitButton = document.querySelector('#upload-submit');
-
+  var hashTagsInput = document.querySelector('.text__hashtags');
+  
   submitButton.addEventListener('click', function () {
-    var hashTagsInput = document.querySelector('.text__hashtags');
-    var hashTags = hashTagsInput.value.split(' ');
+    var hashTags = hashTagsInput.value.split(/[\s]+/);
 
     for (var i = 0; i < hashTags.length; i++) {
       var tag = hashTags[i];
 
-      var count = 0;
-      for (var y = 0; y < hashTags.length; y++) {
-        if (tag.toLowerCase() === hashTags[y].toLowerCase()) {
-          count++;
+      if (tag !== "") {
+        var count = 0;
+        for (var y = 0; y < hashTags.length; y++) {
+          if (tag.toLowerCase() === hashTags[y].toLowerCase()) {
+            count++;
+          }
+        }
+
+        if (tag.charAt(0) !== '#') {
+          hashTagsInput.setCustomValidity('Тег должен начинаться с символа #');
+          break;
+        } else if (tag === '#') {
+          hashTagsInput.setCustomValidity('Тег не должен состоять из одного символа #');
+          break;
+        } else if (tag.lastIndexOf('#') > 0) {
+          hashTagsInput.setCustomValidity('Теги должны разделяться пробелами');
+          break;
+        } else if (hashTags.length > 5) {
+          hashTagsInput.setCustomValidity('Нельзя указывать больше пяти хэш-тегов');
+          break;
+        } else if (tag.length > 20) {
+          hashTagsInput.setCustomValidity('Максимальная длина хэш-тега 20 символов, включая #');
+          break;
+        } else if (count > 1) {
+          hashTagsInput.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды');
+          break;
+        } else {
+          hashTagsInput.setCustomValidity('');
         }
       }
-
-      if (tag.charAt(0) !== '#') {
-        hashTagsInput.setCustomValidity('Тег должен начинаться с символа #');
-        break;
-      } else if (tag === '#') {
-        hashTagsInput.setCustomValidity('Тег не должен состоять из одного символа #');
-        break;
-      } else if (tag.lastIndexOf('#') > 0) {
-        hashTagsInput.setCustomValidity('Теги должны разделяться пробелами');
-        break;
-      } else if (hashTags.length > 5) {
-        hashTagsInput.setCustomValidity('Нельзя указывать больше пяти хэш-тегов');
-        break;
-      } else if (tag.length > 20) {
-        hashTagsInput.setCustomValidity('Максимальная длина хэш-тега 20 символов, включая #');
-        break;
-      } else if (count > 1) {
-        hashTagsInput.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды');
-        break;
-      } else {
-        hashTagsInput.setCustomValidity('');
-      }
     }
+  });
+
+  hashTagsInput.addEventListener('input', function (evt) {
+    var target = evt.target;
+    target.setCustomValidity('');
   });
 }
 
