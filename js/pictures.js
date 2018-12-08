@@ -113,6 +113,21 @@ function fillBigPicture(picture) {
 // upload and edit pictures
 function uploadAndEditPictures() {
   var effectLevelPin = pictures.querySelector('.effect-level__pin');
+  var effectLevelLine = pictures.querySelector('.effect-level__line');
+  var depth = pictures.querySelector('.effect-level__depth');
+  var effectLevelValue = pictures.querySelector('.effect-level__value');
+
+  var getWidthPin = function (pin) {
+    return pin.right - pin.left;
+  };
+
+  var getLine = function () {
+    return effectLevelLine.getBoundingClientRect();
+  };
+
+  var getPin = function () {
+    return effectLevelPin.getBoundingClientRect();
+  };
 
   var getActiveRadio = function () {
     for (var i = 0; i < effectsRadio.length; i++) {
@@ -124,19 +139,54 @@ function uploadAndEditPictures() {
   };
 
   var getEffectLevelValue = function () {
-    var effectLevelLine = pictures.querySelector('.effect-level__line');
-    var line = effectLevelLine.getBoundingClientRect();
-    var pin = effectLevelPin.getBoundingClientRect();
-    var centerPin = pin.left + ((pin.right - line.left) - (pin.left - line.left)) / 2;
-
-    return Math.round((centerPin - line.left) * MAX_PERCENT / (line.right - line.left));
+    var centerPin = getPin().left + getWidthPin(getPin()) / 2;
+   
+    return Math.round((centerPin - getLine().left) * MAX_PERCENT / (getLine().right - getLine().left));
   };
 
-  effectLevelPin.addEventListener('mouseup', function () {
-    var effectLevelValue = pictures.querySelector('.effect-level__value');
-    effectLevelValue = getEffectLevelValue();
+  effectLevelPin.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
 
+    var startCoords = {
+      x: evt.clientX
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX
+      };
+
+      startCoords = {
+        x: moveEvt.clientX
+      };
+
+      var coords = effectLevelPin.offsetLeft - shift.x;
+
+      if (coords > 0 && coords < (getLine().right - getLine().left)) {
+        effectLevelPin.style.left = coords + 'px';
+        depth.style.width = getEffectLevelValue() + '%';
+      }
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      effectLevelValue = getEffectLevelValue();
+      addFilter(effectLevelValue);
+
+      pictures.removeEventListener('mousemove', onMouseMove);
+      pictures.removeEventListener('mouseup', onMouseUp);
+   };
+
+    pictures.addEventListener('mousemove', onMouseMove);
+    pictures.addEventListener('mouseup', onMouseUp);
+  });
+
+  var addFilter = function (effectLevelValue) {
     var effect = getActiveRadio().value;
+
     if (effect === 'chrome') {
       imgUploadPreview.style.filter = 'grayscale(' + effectLevelValue / MAX_PERCENT + ')';
     } else if (effect === 'sepia') {
@@ -146,12 +196,13 @@ function uploadAndEditPictures() {
     } else if (effect === 'phobos') {
       imgUploadPreview.style.filter = 'blur(' + effectLevelValue / MAX_PERCENT * MAX_EFFECT + 'px)';
     } else if (effect === 'heat') {
-      imgUploadPreview.style.filter = 'brightness(' + effectLevelValue / MAX_PERCENT * MAX_EFFECT + MIN_EFFECT + ')';
+      imgUploadPreview.style.filter = 'brightness(' + (effectLevelValue / MAX_PERCENT * (MAX_EFFECT - MIN_EFFECT) + MIN_EFFECT) + ')';
     }
-  });
+  };
 
   var onAddEffectsPreview = function (effectRadio, effectName) {
     effectRadio.addEventListener('click', function () {
+
       for (var i = 0; i < effectsRadio.length; i++) {
         imgUploadPreview.classList.remove('effects__preview--' + effectsRadio[i].value);
         imgUploadPreview.style = null;
@@ -160,9 +211,13 @@ function uploadAndEditPictures() {
       imgUploadPreview.classList.add('effects__preview--' + effectName);
 
       if (effectName === 'none') {
-        document.querySelector('.effect-level').classList.add('hidden');
+        document.querySelector('.effect-level').classList.add('hidden');      
       } else {
         document.querySelector('.effect-level').classList.remove('hidden');
+        effectLevelPin.style.left = (getLine().right - getLine().left) + 'px';
+        depth.style.width = MAX_PERCENT + '%';
+        effectLevelValue = MAX_PERCENT;
+        addFilter(effectLevelValue);
       }
     });
   };
