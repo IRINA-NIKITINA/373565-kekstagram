@@ -140,7 +140,7 @@ function uploadAndEditPictures() {
 
   var getEffectLevelValue = function () {
     var centerPin = getPin().left + getWidthPin(getPin()) / 2;
-   
+
     return Math.round((centerPin - getLine().left) * MAX_PERCENT / (getLine().right - getLine().left));
   };
 
@@ -178,25 +178,25 @@ function uploadAndEditPictures() {
 
       pictures.removeEventListener('mousemove', onMouseMove);
       pictures.removeEventListener('mouseup', onMouseUp);
-   };
+    };
 
     pictures.addEventListener('mousemove', onMouseMove);
     pictures.addEventListener('mouseup', onMouseUp);
   });
 
-  var addFilter = function (effectLevelValue) {
+  var addFilter = function (effectLevel) {
     var effect = getActiveRadio().value;
 
     if (effect === 'chrome') {
-      imgUploadPreview.style.filter = 'grayscale(' + effectLevelValue / MAX_PERCENT + ')';
+      imgUploadPreview.style.filter = 'grayscale(' + effectLevel / MAX_PERCENT + ')';
     } else if (effect === 'sepia') {
-      imgUploadPreview.style.filter = 'sepia(' + effectLevelValue / MAX_PERCENT + ')';
+      imgUploadPreview.style.filter = 'sepia(' + effectLevel / MAX_PERCENT + ')';
     } else if (effect === 'marvin') {
-      imgUploadPreview.style.filter = 'invert(' + effectLevelValue + '%)';
+      imgUploadPreview.style.filter = 'invert(' + effectLevel + '%)';
     } else if (effect === 'phobos') {
-      imgUploadPreview.style.filter = 'blur(' + effectLevelValue / MAX_PERCENT * MAX_EFFECT + 'px)';
+      imgUploadPreview.style.filter = 'blur(' + effectLevel / MAX_PERCENT * MAX_EFFECT + 'px)';
     } else if (effect === 'heat') {
-      imgUploadPreview.style.filter = 'brightness(' + (effectLevelValue / MAX_PERCENT * (MAX_EFFECT - MIN_EFFECT) + MIN_EFFECT) + ')';
+      imgUploadPreview.style.filter = 'brightness(' + (effectLevel / MAX_PERCENT * (MAX_EFFECT - MIN_EFFECT) + MIN_EFFECT) + ')';
     }
   };
 
@@ -211,7 +211,7 @@ function uploadAndEditPictures() {
       imgUploadPreview.classList.add('effects__preview--' + effectName);
 
       if (effectName === 'none') {
-        document.querySelector('.effect-level').classList.add('hidden');      
+        document.querySelector('.effect-level').classList.add('hidden');
       } else {
         document.querySelector('.effect-level').classList.remove('hidden');
         effectLevelPin.style.left = (getLine().right - getLine().left) + 'px';
