@@ -168,6 +168,8 @@ function uploadAndEditPictures() {
         effectLevelPin.style.left = coords + 'px';
         depth.style.width = getEffectLevelValue() + '%';
       }
+      effectLevelValue = getEffectLevelValue();
+      addFilter(effectLevelValue);
     };
 
     var onMouseUp = function (upEvt) {
