@@ -146,7 +146,7 @@ function uploadAndEditPictures() {
 
   effectLevelPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-
+    
     var startCoords = {
       x: evt.clientX
     };
@@ -168,15 +168,15 @@ function uploadAndEditPictures() {
         effectLevelPin.style.left = coords + 'px';
         depth.style.width = getEffectLevelValue() + '%';
       }
-      effectLevelValue = getEffectLevelValue();
-      addFilter(effectLevelValue);
+      effectLevelValue.value = getEffectLevelValue();
+      addFilter(effectLevelValue.value);
     };
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
-      effectLevelValue = getEffectLevelValue();
-      addFilter(effectLevelValue);
+      effectLevelValue.value = getEffectLevelValue();
+      addFilter(effectLevelValue.value);
 
       pictures.removeEventListener('mousemove', onMouseMove);
       pictures.removeEventListener('mouseup', onMouseUp);
@@ -218,9 +218,9 @@ function uploadAndEditPictures() {
         document.querySelector('.effect-level').classList.remove('hidden');
         effectLevelPin.style.left = (getLine().right - getLine().left) + 'px';
         depth.style.width = MAX_PERCENT + '%';
-        effectLevelValue = MAX_PERCENT;
-        addFilter(effectLevelValue);
-      }
+        effectLevelValue.value = MAX_PERCENT;
+        addFilter(effectLevelValue.value);
+        }
     });
   };
 
@@ -288,6 +288,7 @@ function uploadKeyAndMouseBindings() {
   var imgUploadOverlay = pictures.querySelector('.img-upload__overlay');
   var uploadCancel = pictures.querySelector('#upload-cancel');
   var hashTagsInput = document.querySelector('.text__hashtags');
+  var imgUploadPreview = pictures.querySelector('.img-upload__preview').children[0];
 
   var onPopupEscPress = function (evt) {
     if (hashTagsInput !== document.activeElement) {
@@ -299,6 +300,16 @@ function uploadKeyAndMouseBindings() {
 
   var openPopup = function () {
     imgUploadOverlay.classList.remove('hidden');
+    imgUploadOverlay.querySelector('#effect-none').checked = true;
+
+    if (imgUploadPreview.classList.value !== '') {
+     imgUploadPreview.classList.remove(imgUploadPreview.classList.value);
+    }
+
+    imgUploadPreview.classList.add('effects__preview--none');
+    imgUploadOverlay.querySelector('.effect-level').classList.add('hidden');
+    imgUploadPreview.style = null;
+
     document.addEventListener('keydown', onPopupEscPress);
   };
 
