@@ -168,14 +168,14 @@ function uploadAndEditPictures() {
         effectLevelPin.style.left = coords + 'px';
         depth.style.width = getEffectLevelValue() + '%';
       }
-      effectLevelValue.value = getEffectLevelValue();
+      effectLevelValue.setAttribute('value', getEffectLevelValue());
       addFilter(effectLevelValue.value);
     };
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
-      effectLevelValue.value = getEffectLevelValue();
+      effectLevelValue.setAttribute('value', getEffectLevelValue());
       addFilter(effectLevelValue.value);
 
       pictures.removeEventListener('mousemove', onMouseMove);
@@ -218,7 +218,7 @@ function uploadAndEditPictures() {
         document.querySelector('.effect-level').classList.remove('hidden');
         effectLevelPin.style.left = (getLine().right - getLine().left) + 'px';
         depth.style.width = MAX_PERCENT + '%';
-        effectLevelValue.value = MAX_PERCENT;
+        effectLevelValue.setAttribute('value', MAX_PERCENT);
         addFilter(effectLevelValue.value);
       }
     });
