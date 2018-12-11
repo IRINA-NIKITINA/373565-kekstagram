@@ -132,7 +132,7 @@
   // form validation
   function validForm() {
     var submitButton = document.querySelector('#upload-submit');
-  
+
     submitButton.addEventListener('click', function () {
       var hashTags = hashTagsInput.value.split(/[\s]+/);
 
@@ -227,4 +227,4 @@
   uploadAndEditPictures();
   uploadKeyAndMouseBindings();
   validForm();
-})()
+})();

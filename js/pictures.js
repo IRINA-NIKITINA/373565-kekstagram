@@ -76,4 +76,4 @@
   window.pictures = {
     photos: photos
   };
-})()
+})();
