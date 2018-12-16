@@ -296,7 +296,7 @@
     var onMessageEscPress = function (evt) {
       if (evt.keyCode === window.util.ESC_KEYCODE) {
         closeMessage();
-      } 
+      }
     };
 
     var closeMessage = function () {
@@ -319,7 +319,7 @@
     addEsc();
   };
 
-  //open-close upload
+  // open-close upload
   var uploadFile = pictures.querySelector('#upload-file');
   var uploadCancel = pictures.querySelector('#upload-cancel');
 
