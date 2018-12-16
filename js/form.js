@@ -52,7 +52,7 @@
     var startCoords = {
       x: evt.clientX
     };
-     
+
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
@@ -126,11 +126,13 @@
     });
   };
 
-  for (var i = 0; i < effectsRadio.length; i++) {
-    onAddEffectsPreview(effectsRadio[i], effectsRadio[i].value + '');
-  }
+  var addEffectRadioClick = function () {
+    for (var i = 0; i < effectsRadio.length; i++) {
+      onAddEffectsPreview(effectsRadio[i], effectsRadio[i].value + '');
+    }
+  };
 
-// form validation
+  // form validation
   var submitButton = document.querySelector('#upload-submit');
   var coordX = effectLevelPin.style.left;
   var effectRadioActive = getActiveRadio();
@@ -173,11 +175,11 @@
           hashTagsInput.setCustomValidity('');
         }
       }
-      return true;
     }
+    return true;
   };
 
-  hashTagsInput.addEventListener('invalid', function (evt) {
+  hashTagsInput.addEventListener('invalid', function () {
     hashTagsInput.style.border = '2px solid red';
   });
 
@@ -196,7 +198,7 @@
 
   var clearForm = function () {
     effectRadioActive.checked = true;
-     
+
     if (imgUploadPreview.classList.value !== '') {
       imgUploadPreview.classList.remove(imgUploadPreview.classList.value);
     }
@@ -216,10 +218,10 @@
 
   var onLoad = function () {
     imgUploadOverlay.classList.add('hidden');
-    clearForm(); 
+    clearForm();
     successLoadMessage();
     closeSuccessMessage();
-   };
+  };
 
   var onError = function () {
     errorLoadMessage();
@@ -230,9 +232,9 @@
     if (document.querySelector('.success') !== null) {
       document.querySelector('.success').classList.remove('visually-hidden');
     } else {
-       var template = document.querySelector('#success').content.querySelector('section');
-       var element = template.cloneNode(true);
-       document.querySelector('main').appendChild(element);
+      var template = document.querySelector('#success').content.querySelector('section');
+      var element = template.cloneNode(true);
+      document.querySelector('main').appendChild(element);
     }
   };
 
@@ -246,12 +248,12 @@
     }
   };
 
-// open-close message
+  // open-close message
   var closeSuccessMessage = function () {
     var body = document.querySelector('body');
     var successMessage = document.querySelector('.success');
     var successButton = successMessage.querySelector('.success__button');
-    var main = document.querySelector('main');
+
 
     var addEsc = function () {
       document.addEventListener('keydown', onMessageEscPress);
@@ -260,7 +262,7 @@
     var onMessageEscPress = function (evt) {
       if (evt.keyCode === window.util.ESC_KEYCODE) {
         closeMessage();
-      } 
+      }
     };
 
     var closeMessage = function () {
@@ -269,7 +271,7 @@
     };
 
     successButton.addEventListener('click', closeMessage);
-    
+
     successButton.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.util.ENTER_KEYCODE) {
         closeMessage();
@@ -285,7 +287,7 @@
     var body = document.querySelector('body');
     var errorMessage = document.querySelector('.error');
     var errorButtons = errorMessage.querySelectorAll('.error__button');
-    var main = document.querySelector('main');
+
 
     var addEsc = function () {
       document.addEventListener('keydown', onMessageEscPress);
@@ -294,20 +296,20 @@
     var onMessageEscPress = function (evt) {
       if (evt.keyCode === window.util.ESC_KEYCODE) {
         closeMessage();
-       } 
-     };
+      } 
+    };
 
     var closeMessage = function () {
       errorMessage.classList.add('visually-hidden');
-      document.removeEventListener('keydown', onMessageEscPress);     
+      document.removeEventListener('keydown', onMessageEscPress);
     };
 
-    errorButtons.forEach (function (errorButton) {
+    errorButtons.forEach(function (errorButton) {
       errorButton.addEventListener('click', closeMessage);
 
       errorButton.addEventListener('keydown', function (evt) {
         if (evt.keyCode === window.util.ENTER_KEYCODE) {
-        closeMessage();
+          closeMessage();
         }
       });
     });
@@ -317,7 +319,7 @@
     addEsc();
   };
 
-//open-close upload 
+  //open-close upload
   var uploadFile = pictures.querySelector('#upload-file');
   var uploadCancel = pictures.querySelector('#upload-cancel');
 
@@ -350,4 +352,6 @@
       closePopup();
     }
   });
+
+  addEffectRadioClick();
 })();
