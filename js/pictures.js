@@ -66,8 +66,8 @@
       var newPhotos = [];
       while (newPhotos.length < 10) {
         newPhotos = getArrayRandomPhoto(allPhotos, newPhotos);
-        newPhotos = newPhotos.filter(function (it, i) {
-          return newPhotos.indexOf(it) === i;
+        newPhotos = newPhotos.filter(function (it, k) {
+          return newPhotos.indexOf(it) === k;
         });
       }
       return newPhotos;
