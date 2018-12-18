@@ -11,19 +11,18 @@
   var imgUploadOverlay = pictures.querySelector('.img-upload__overlay');
   var imgUploadPreview = pictures.querySelector('.img-upload__preview').children[0];
   var effectsRadio = pictures.querySelectorAll('.effects__radio');
-  
+
   var hashTagsInput = document.querySelector('.text__hashtags');
   var description = document.querySelector('.text__description');
-  
+
   var effectLevelPin = pictures.querySelector('.effect-level__pin');
   var effectLevelLine = pictures.querySelector('.effect-level__line');
   var depth = pictures.querySelector('.effect-level__depth');
   var effectLevelValue = pictures.querySelector('.effect-level__value');
-  
+
   var scale = pictures.querySelector('.scale__control--value');
   var scaleControlSmaller = pictures.querySelector('.scale__control--smaller');
   var scaleControlBigger = pictures.querySelector('.scale__control--bigger');
-  
 
   // upload and edit pictures
   scaleControlSmaller.addEventListener('click', function () {
@@ -37,8 +36,8 @@
   scaleControlBigger.addEventListener('click', function () {
     var number = scale.value.substring(0, scale.value.length - 1);
     if (number < MAX_PERCENT) {
-      scale.setAttribute('value', Number.parseInt(number) + STEP + '%');
-      addTransform(Number.parseInt(number) + STEP);
+      scale.setAttribute('value', Number.parseInt(number, 10) + STEP + '%');
+      addTransform(Number.parseInt(number, 10) + STEP);
     }
   });
 
