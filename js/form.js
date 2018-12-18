@@ -154,6 +154,7 @@
 
   var addEffectRadioClick = function () {
     scale.setAttribute('value', MAX_PERCENT + '%');
+    
     for (var i = 0; i < effectsRadio.length; i++) {
       onAddEffectsPreview(effectsRadio[i], effectsRadio[i].value + '');
     }
