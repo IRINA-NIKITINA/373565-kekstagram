@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-(function () {
+(function() {
   var MAX_EFFECT = 3;
   var MIN_EFFECT = 1;
   var MAX_PERCENT = 100;
@@ -49,15 +49,15 @@
     return pin.right - pin.left;
   };
 
-  var getLine = function () {
+  var getLine = function() {
     return effectLevelLine.getBoundingClientRect();
   };
 
-  var getPin = function () {
+  var getPin = function() {
     return effectLevelPin.getBoundingClientRect();
   };
 
-  var getActiveRadio = function () {
+  var getActiveRadio = function() {
     for (var i = 0; i < effectsRadio.length; i++) {
       if (effectsRadio[i].checked) {
         return effectsRadio[i];
@@ -66,20 +66,23 @@
     return null;
   };
 
-  var getEffectLevelValue = function () {
+  var getEffectLevelValue = function() {
     var centerPin = getPin().left + getWidthPin(getPin()) / 2;
 
-    return Math.round((centerPin - getLine().left) * MAX_PERCENT / (getLine().right - getLine().left));
+    return Math.round(
+      ((centerPin - getLine().left) * MAX_PERCENT) /
+        (getLine().right - getLine().left)
+    );
   };
 
-  effectLevelPin.addEventListener('mousedown', function (evt) {
+  effectLevelPin.addEventListener("mousedown", function(evt) {
     evt.preventDefault();
 
     var startCoords = {
       x: evt.clientX
     };
 
-    var onMouseMove = function (moveEvt) {
+    var onMouseMove = function(moveEvt) {
       moveEvt.preventDefault();
 
       var shift = {
@@ -92,56 +95,63 @@
 
       var coords = effectLevelPin.offsetLeft - shift.x;
 
-      if (coords > 0 && coords < (getLine().right - getLine().left)) {
-        effectLevelPin.style.left = coords + 'px';
-        depth.style.width = getEffectLevelValue() + '%';
+      if (coords > 0 && coords < getLine().right - getLine().left) {
+        effectLevelPin.style.left = coords + "px";
+        depth.style.width = getEffectLevelValue() + "%";
       }
-      effectLevelValue.setAttribute('value', getEffectLevelValue());
+      effectLevelValue.setAttribute("value", getEffectLevelValue());
       addFilter(effectLevelValue.value);
     };
 
-    var onMouseUp = function (upEvt) {
+    var onMouseUp = function(upEvt) {
       upEvt.preventDefault();
 
-      effectLevelValue.setAttribute('value', getEffectLevelValue());
+      effectLevelValue.setAttribute("value", getEffectLevelValue());
       addFilter(effectLevelValue.value);
 
-      pictures.removeEventListener('mousemove', onMouseMove);
-      pictures.removeEventListener('mouseup', onMouseUp);
+      pictures.removeEventListener("mousemove", onMouseMove);
+      pictures.removeEventListener("mouseup", onMouseUp);
     };
 
-    pictures.addEventListener('mousemove', onMouseMove);
-    pictures.addEventListener('mouseup', onMouseUp);
+    pictures.addEventListener("mousemove", onMouseMove);
+    pictures.addEventListener("mouseup", onMouseUp);
   });
 
-  var addFilter = function (effectLevel) {
+  var addFilter = function(effectLevel) {
     var effect = getActiveRadio().value;
 
-    if (effect === 'chrome') {
-      imgUploadPreview.style.filter = 'grayscale(' + effectLevel / MAX_PERCENT + ')';
-    } else if (effect === 'sepia') {
-      imgUploadPreview.style.filter = 'sepia(' + effectLevel / MAX_PERCENT + ')';
-    } else if (effect === 'marvin') {
-      imgUploadPreview.style.filter = 'invert(' + effectLevel + '%)';
-    } else if (effect === 'phobos') {
-      imgUploadPreview.style.filter = 'blur(' + effectLevel / MAX_PERCENT * MAX_EFFECT + 'px)';
-    } else if (effect === 'heat') {
-      imgUploadPreview.style.filter = 'brightness(' + (effectLevel / MAX_PERCENT * (MAX_EFFECT - MIN_EFFECT) + MIN_EFFECT) + ')';
+    if (effect === "chrome") {
+      imgUploadPreview.style.filter =
+        "grayscale(" + effectLevel / MAX_PERCENT + ")";
+    } else if (effect === "sepia") {
+      imgUploadPreview.style.filter =
+        "sepia(" + effectLevel / MAX_PERCENT + ")";
+    } else if (effect === "marvin") {
+      imgUploadPreview.style.filter = "invert(" + effectLevel + "%)";
+    } else if (effect === "phobos") {
+      imgUploadPreview.style.filter =
+        "blur(" + (effectLevel / MAX_PERCENT) * MAX_EFFECT + "px)";
+    } else if (effect === "heat") {
+      imgUploadPreview.style.filter =
+        "brightness(" +
+        ((effectLevel / MAX_PERCENT) * (MAX_EFFECT - MIN_EFFECT) + MIN_EFFECT) +
+        ")";
     }
   };
 
-  var onAddEffectsPreview = function (effectRadio, effectName) {
-    effectRadio.addEventListener('click', function () {
-
+  var onAddEffectsPreview = function(effectRadio, effectName) {
+    effectRadio.addEventListener("click", function() {
       for (var i = 0; i < effectsRadio.length; i++) {
-        imgUploadPreview.classList.remove('effects__preview--' + effectsRadio[i].value);
+        imgUploadPreview.classList.remove(
+          "effects__preview--" + effectsRadio[i].value
+        );
         imgUploadPreview.style = null;
       }
 
-      imgUploadPreview.classList.add('effects__preview--' + effectName);
+      imgUploadPreview.classList.add("effects__preview--" + effectName);
 
-      if (effectName === 'none') {
-        document.querySelector('.effect-level').classList.add('hidden');
+      if (effectName === "none") {
+        document.querySelector(".effect-level").classList.add("hidden");
       } else {
         document.querySelector('.effect-level').classList.remove('hidden');
         effectLevelPin.style.left = getLine().right - getLine().left + 'px';
@@ -155,23 +165,23 @@
   var addEffectRadioClick = function () {
     scale.setAttribute('value', MAX_PERCENT + '%');
     for (var i = 0; i < effectsRadio.length; i++) {
-      onAddEffectsPreview(effectsRadio[i], effectsRadio[i].value + '');
+      onAddEffectsPreview(effectsRadio[i], effectsRadio[i].value + "");
     }
   };
 
   // form validation
-  var submitButton = document.querySelector('#upload-submit');
+  var submitButton = document.querySelector("#upload-submit");
   var coordX = effectLevelPin.style.left;
   var effectRadioActive = getActiveRadio();
   var valueEffect = pictures.querySelector('.effect-level__value').value;
 
-  var validHashTags = function () {
+  var validHashTags = function() {
     var hashTags = hashTagsInput.value.split(/[\s]+/);
 
     for (var i = 0; i < hashTags.length; i++) {
       var tag = hashTags[i];
 
-      if (tag !== '') {
+      if (tag !== "") {
         var count = 0;
         for (var y = 0; y < hashTags.length; y++) {
           if (tag.toLowerCase() === hashTags[y].toLowerCase()) {
@@ -198,43 +208,46 @@
           hashTagsInput.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды');
           return false;
         } else {
-          hashTagsInput.setCustomValidity('');
+          hashTagsInput.setCustomValidity("");
         }
       }
     }
     return true;
   };
 
-  hashTagsInput.addEventListener('invalid', function () {
-    hashTagsInput.style.border = '2px solid red';
+  hashTagsInput.addEventListener("invalid", function() {
+    hashTagsInput.style.border = "2px solid red";
   });
 
-  hashTagsInput.addEventListener('input', function (evt) {
+  hashTagsInput.addEventListener("input", function(evt) {
     var target = evt.target;
-    target.setCustomValidity('');
-    hashTagsInput.style.border = 'none';
+    target.setCustomValidity("");
+    hashTagsInput.style.border = "none";
   });
 
-  submitButton.addEventListener('click', function (evt) {
+  submitButton.addEventListener("click", function(evt) {
     if (validHashTags()) {
       evt.preventDefault();
     }
     window.backend.save(new FormData(form), onLoad, window.util.onError);
   });
 
-  var clearForm = function () {
+  var clearForm = function() {
     effectRadioActive.checked = true;
 
-    if (imgUploadPreview.classList.value !== '') {
+    if (imgUploadPreview.classList.value !== "") {
       imgUploadPreview.classList.remove(imgUploadPreview.classList.value);
     }
 
-    imgUploadPreview.classList.add('effects__preview--' + effectRadioActive.value);
+    imgUploadPreview.classList.add(
+      "effects__preview--" + effectRadioActive.value
+    );
     imgUploadPreview.style = null;
 
     effectLevelPin.style.left = coordX;
-    effectLevelValue.setAttribute('value', valueEffect);
+    effectLevelValue.setAttribute("value", valueEffect);
     addFilter(effectLevelValue.value);
+
     depth.style.width = effectLevelValue.value + '%';
     hashTagsInput.value = '';
     hashTagsInput.style.border = 'none';
@@ -242,42 +255,45 @@
     scale.setAttribute('value', MAX_PERCENT + '%');
   };
 
-  var onLoad = function () {
-    imgUploadOverlay.classList.add('hidden');
+  var onLoad = function() {
+    imgUploadOverlay.classList.add("hidden");
     clearForm();
     window.messages.successLoadMessage();
     window.messages.closeSuccessMessage();
   };
 
   // open-close upload
-  var uploadFile = pictures.querySelector('#upload-file');
-  var uploadCancel = pictures.querySelector('#upload-cancel');
+  var uploadFile = pictures.querySelector("#upload-file");
+  var uploadCancel = pictures.querySelector("#upload-cancel");
 
-  var onPopupEscPress = function (evt) {
-    if (hashTagsInput !== document.activeElement && description !== document.activeElement) {
+  var onPopupEscPress = function(evt) {
+    if (
+      hashTagsInput !== document.activeElement &&
+      description !== document.activeElement
+    ) {
       if (evt.keyCode === window.util.ESC_KEYCODE) {
         closePopup();
       }
     }
   };
 
-  var openPopup = function () {
-    imgUploadOverlay.classList.remove('hidden');
-    document.addEventListener('keydown', onPopupEscPress);
+  var openPopup = function() {
+    imgUploadOverlay.classList.remove("hidden");
+    document.addEventListener("keydown", onPopupEscPress);
   };
 
-  var closePopup = function () {
-    imgUploadOverlay.classList.add('hidden');
+  var closePopup = function() {
+    imgUploadOverlay.classList.add("hidden");
     uploadFile.value = null;
     clearForm();
-    document.removeEventListener('keydown', onPopupEscPress);
+    document.removeEventListener("keydown", onPopupEscPress);
   };
 
-  uploadFile.addEventListener('change', openPopup);
+  uploadFile.addEventListener("change", openPopup);
 
-  uploadCancel.addEventListener('click', closePopup);
+  uploadCancel.addEventListener("click", closePopup);
 
-  uploadCancel.addEventListener('keydown', function (evt) {
+  uploadCancel.addEventListener("keydown", function(evt) {
     if (evt.keyCode === window.util.ENTER_KEYCODE) {
       closePopup();
     }
