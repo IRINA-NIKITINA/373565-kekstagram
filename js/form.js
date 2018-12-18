@@ -69,7 +69,7 @@
   var getEffectLevelValue = function () {
     var centerPin = getPin().left + getWidthPin(getPin()) / 2;
 
-    return Math.round((centerPin - getLine().left) * MAX_PERCENT / (getLine().right - getLine().left));
+    return Math.round((centerPin - getLine().left) * MAX_PERCENT) / (getLine().right - getLine().left));
   };
 
   effectLevelPin.addEventListener('mousedown', function (evt) {
@@ -92,7 +92,7 @@
 
       var coords = effectLevelPin.offsetLeft - shift.x;
 
-      if (coords > 0 && coords < (getLine().right - getLine().left)) {
+      if (coords > 0 && coords < getLine().right - getLine().left) {
         effectLevelPin.style.left = coords + 'px';
         depth.style.width = getEffectLevelValue() + '%';
       }
@@ -118,21 +118,20 @@
     var effect = getActiveRadio().value;
 
     if (effect === 'chrome') {
-      imgUploadPreview.style.filter = 'grayscale(' + effectLevel / MAX_PERCENT + ')';
+      imgUploadPreview.style.filter = 'grayscale(' + effectLevel / MAX_PERCENT + ")";
     } else if (effect === 'sepia') {
       imgUploadPreview.style.filter = 'sepia(' + effectLevel / MAX_PERCENT + ')';
     } else if (effect === 'marvin') {
       imgUploadPreview.style.filter = 'invert(' + effectLevel + '%)';
     } else if (effect === 'phobos') {
-      imgUploadPreview.style.filter = 'blur(' + effectLevel / MAX_PERCENT * MAX_EFFECT + 'px)';
+      imgUploadPreview.style.filter = 'blur(' + (effectLevel / MAX_PERCENT) * MAX_EFFECT + 'px)';
     } else if (effect === 'heat') {
-      imgUploadPreview.style.filter = 'brightness(' + (effectLevel / MAX_PERCENT * (MAX_EFFECT - MIN_EFFECT) + MIN_EFFECT) + ')';
+      imgUploadPreview.style.filter = 'brightness(' + ((effectLevel / MAX_PERCENT) * (MAX_EFFECT - MIN_EFFECT) + MIN_EFFECT) + ')';
     }
   };
 
   var onAddEffectsPreview = function (effectRadio, effectName) {
-    effectRadio.addEventListener('click', function () {
-
+    effectRadio.addEventListener ('click', function() {
       for (var i = 0; i < effectsRadio.length; i++) {
         imgUploadPreview.classList.remove('effects__preview--' + effectsRadio[i].value);
         imgUploadPreview.style = null;
@@ -161,7 +160,7 @@
   };
 
   // form validation
-  var submitButton = document.querySelector('#upload-submit');
+  var submitButton = document.querySelector("#upload-submit");
   var coordX = effectLevelPin.style.left;
   var effectRadioActive = getActiveRadio();
   var valueEffect = pictures.querySelector('.effect-level__value').value;
@@ -223,7 +222,7 @@
     window.backend.save(new FormData(form), onLoad, window.util.onError);
   });
 
-  var clearForm = function () {
+  var clearForm = function() {
     effectRadioActive.checked = true;
 
     if (imgUploadPreview.classList.value !== '') {
@@ -236,6 +235,7 @@
     effectLevelPin.style.left = coordX;
     effectLevelValue.setAttribute('value', valueEffect);
     addFilter(effectLevelValue.value);
+
     depth.style.width = effectLevelValue.value + '%';
     hashTagsInput.value = '';
     hashTagsInput.style.border = 'none';
@@ -243,7 +243,7 @@
     scale.setAttribute('value', MAX_PERCENT + '%');
   };
 
-  var onLoad = function () {
+  var onLoad = function() {
     imgUploadOverlay.classList.add('hidden');
     clearForm();
     window.messages.successLoadMessage();
@@ -255,7 +255,10 @@
   var uploadCancel = pictures.querySelector('#upload-cancel');
 
   var onPopupEscPress = function (evt) {
-    if (hashTagsInput !== document.activeElement && description !== document.activeElement) {
+    if (
+      hashTagsInput !== document.activeElement &&
+      description !== document.activeElement
+    ) {
       if (evt.keyCode === window.util.ESC_KEYCODE) {
         closePopup();
       }
@@ -267,7 +270,7 @@
     document.addEventListener('keydown', onPopupEscPress);
   };
 
-  var closePopup = function () {
+  var closePopup = function() {
     imgUploadOverlay.classList.add('hidden');
     uploadFile.value = null;
     clearForm();
@@ -278,7 +281,7 @@
 
   uploadCancel.addEventListener('click', closePopup);
 
-  uploadCancel.addEventListener('keydown', function (evt) {
+  uploadCancel.addEventListener('keydown', function(evt) {
     if (evt.keyCode === window.util.ENTER_KEYCODE) {
       closePopup();
     }
