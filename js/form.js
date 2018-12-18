@@ -8,7 +8,8 @@
   var pictures = document.querySelector('.pictures');
   var form = document.querySelector('.img-upload__form');
   var imgUploadOverlay = pictures.querySelector('.img-upload__overlay');
-  var imgUploadPreview = pictures.querySelector('.img-upload__preview').children[0];
+  var imgUploadPreview = pictures.querySelector('.img-upload__preview')
+    .children[0];
   var effectsRadio = pictures.querySelectorAll('.effects__radio');
   var hashTagsInput = document.querySelector('.text__hashtags');
   var description = document.querySelector('.text__description');
@@ -43,7 +44,10 @@
   var getEffectLevelValue = function () {
     var centerPin = getPin().left + getWidthPin(getPin()) / 2;
 
-    return Math.round((centerPin - getLine().left) * MAX_PERCENT / (getLine().right - getLine().left));
+    return Math.round(
+        ((centerPin - getLine().left) * MAX_PERCENT) /
+        (getLine().right - getLine().left)
+    );
   };
 
   effectLevelPin.addEventListener('mousedown', function (evt) {
@@ -66,7 +70,7 @@
 
       var coords = effectLevelPin.offsetLeft - shift.x;
 
-      if (coords > 0 && coords < (getLine().right - getLine().left)) {
+      if (coords > 0 && coords < getLine().right - getLine().left) {
         effectLevelPin.style.left = coords + 'px';
         depth.style.width = getEffectLevelValue() + '%';
       }
@@ -92,23 +96,30 @@
     var effect = getActiveRadio().value;
 
     if (effect === 'chrome') {
-      imgUploadPreview.style.filter = 'grayscale(' + effectLevel / MAX_PERCENT + ')';
+      imgUploadPreview.style.filter =
+        'grayscale(' + effectLevel / MAX_PERCENT + ')';
     } else if (effect === 'sepia') {
-      imgUploadPreview.style.filter = 'sepia(' + effectLevel / MAX_PERCENT + ')';
+      imgUploadPreview.style.filter =
+        'sepia(' + effectLevel / MAX_PERCENT + ')';
     } else if (effect === 'marvin') {
       imgUploadPreview.style.filter = 'invert(' + effectLevel + '%)';
     } else if (effect === 'phobos') {
-      imgUploadPreview.style.filter = 'blur(' + effectLevel / MAX_PERCENT * MAX_EFFECT + 'px)';
+      imgUploadPreview.style.filter =
+        'blur(' + (effectLevel / MAX_PERCENT) * MAX_EFFECT + 'px)';
     } else if (effect === 'heat') {
-      imgUploadPreview.style.filter = 'brightness(' + (effectLevel / MAX_PERCENT * (MAX_EFFECT - MIN_EFFECT) + MIN_EFFECT) + ')';
+      imgUploadPreview.style.filter =
+        'brightness(' +
+        ((effectLevel / MAX_PERCENT) * (MAX_EFFECT - MIN_EFFECT) + MIN_EFFECT) +
+        ')';
     }
   };
 
   var onAddEffectsPreview = function (effectRadio, effectName) {
     effectRadio.addEventListener('click', function () {
-
       for (var i = 0; i < effectsRadio.length; i++) {
-        imgUploadPreview.classList.remove('effects__preview--' + effectsRadio[i].value);
+        imgUploadPreview.classList.remove(
+            'effects__preview--' + effectsRadio[i].value
+        );
         imgUploadPreview.style = null;
       }
 
@@ -118,7 +129,7 @@
         document.querySelector('.effect-level').classList.add('hidden');
       } else {
         document.querySelector('.effect-level').classList.remove('hidden');
-        effectLevelPin.style.left = (getLine().right - getLine().left) + 'px';
+        effectLevelPin.style.left = getLine().right - getLine().left + 'px';
         depth.style.width = MAX_PERCENT + '%';
         effectLevelValue.setAttribute('value', MAX_PERCENT);
         addFilter(effectLevelValue.value);
@@ -155,22 +166,30 @@
 
         if (tag.charAt(0) !== '#') {
           hashTagsInput.setCustomValidity('Тег должен начинаться с символа #');
-          break;
+          return false;
         } else if (tag === '#') {
-          hashTagsInput.setCustomValidity('Тег не должен состоять из одного символа #');
-          break;
+          hashTagsInput.setCustomValidity(
+              'Тег не должен состоять из одного символа #'
+          );
+          return false;
         } else if (tag.lastIndexOf('#') > 0) {
           hashTagsInput.setCustomValidity('Теги должны разделяться пробелами');
-          break;
+          return false;
         } else if (hashTags.length > 5) {
-          hashTagsInput.setCustomValidity('Нельзя указывать больше пяти хэш-тегов');
-          break;
+          hashTagsInput.setCustomValidity(
+              'Нельзя указывать больше пяти хэш-тегов'
+          );
+          return false;
         } else if (tag.length > 20) {
-          hashTagsInput.setCustomValidity('Максимальная длина хэш-тега 20 символов, включая #');
-          break;
+          hashTagsInput.setCustomValidity(
+              'Максимальная длина хэш-тега 20 символов, включая #'
+          );
+          return false;
         } else if (count > 1) {
-          hashTagsInput.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды');
-          break;
+          hashTagsInput.setCustomValidity(
+              'Один и тот же хэш-тег не может быть использован дважды'
+          );
+          return false;
         } else {
           hashTagsInput.setCustomValidity('');
         }
@@ -203,7 +222,9 @@
       imgUploadPreview.classList.remove(imgUploadPreview.classList.value);
     }
 
-    imgUploadPreview.classList.add('effects__preview--' + effectRadioActive.value);
+    imgUploadPreview.classList.add(
+        'effects__preview--' + effectRadioActive.value
+    );
     imgUploadPreview.style = null;
 
     effectLevelPin.style.left = coordX;
@@ -232,7 +253,9 @@
     if (document.querySelector('.success') !== null) {
       document.querySelector('.success').classList.remove('visually-hidden');
     } else {
-      var template = document.querySelector('#success').content.querySelector('section');
+      var template = document
+        .querySelector('#success')
+        .content.querySelector('section');
       var element = template.cloneNode(true);
       document.querySelector('main').appendChild(element);
     }
@@ -242,7 +265,9 @@
     if (document.querySelector('.error') !== null) {
       document.querySelector('.error').classList.remove('visually-hidden');
     } else {
-      var template = document.querySelector('#error').content.querySelector('section');
+      var template = document
+        .querySelector('#error')
+        .content.querySelector('section');
       var element = template.cloneNode(true);
       document.querySelector('main').appendChild(element);
     }
@@ -253,7 +278,6 @@
     var body = document.querySelector('body');
     var successMessage = document.querySelector('.success');
     var successButton = successMessage.querySelector('.success__button');
-
 
     var addEsc = function () {
       document.addEventListener('keydown', onMessageEscPress);
@@ -287,7 +311,6 @@
     var body = document.querySelector('body');
     var errorMessage = document.querySelector('.error');
     var errorButtons = errorMessage.querySelectorAll('.error__button');
-
 
     var addEsc = function () {
       document.addEventListener('keydown', onMessageEscPress);
@@ -324,7 +347,10 @@
   var uploadCancel = pictures.querySelector('#upload-cancel');
 
   var onPopupEscPress = function (evt) {
-    if (hashTagsInput !== document.activeElement && description !== document.activeElement) {
+    if (
+      hashTagsInput !== document.activeElement &&
+      description !== document.activeElement
+    ) {
       if (evt.keyCode === window.util.ESC_KEYCODE) {
         closePopup();
       }
