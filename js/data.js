@@ -6,4 +6,5 @@
   };
 
   window.backend.load(onLoad, window.util.onError);
+
 })();

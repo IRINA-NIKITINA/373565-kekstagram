@@ -18,7 +18,7 @@
       bigPicture.querySelector('.social__comment-count').innerHTML = commentCount.replace(commentCount.charAt(0), MIN_COMMENTS + '');
     } else {
       addComments(photo.comments.length, photo);
-      bigPicture.querySelector('.social__comment-count').innerHTML = commentCount.replace(MIN_COMMENTS + '', photo.comments.length);
+      bigPicture.querySelector('.social__comment-count').innerHTML = commentCount.replace(commentCount.charAt(0), photo.comments.length);
     }
   }
 
