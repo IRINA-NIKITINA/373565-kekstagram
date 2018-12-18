@@ -18,7 +18,7 @@
     var template = document.querySelector('#picture').content.querySelector('a');
     var fragment = document.createDocumentFragment();
 
-    if (typeof photos == 'undefined') {
+    if (typeof photos === 'undefined') {
       photos = allPhotos;
     }
 
@@ -33,10 +33,10 @@
   };
 
   var onButtonClick = function (buttonFilter, allPhotos) {
-    buttonFilter.addEventListener ('click', function () {
+    buttonFilter.addEventListener('click', function () {
       buttonFilter.classList.add('img-filters__button--active');
       for (var i = 0; i < buttonsFilters.length; i++) {
-        if(buttonsFilters[i] !== buttonFilter) {
+        if (buttonsFilters[i] !== buttonFilter) {
           buttonsFilters[i].classList.remove('img-filters__button--active');
         }
       }
@@ -50,7 +50,7 @@
     }
   };
 
-  var updatePhotos = function(buttonFilter, allPhotos) {
+  var updatePhotos = function (buttonFilter, allPhotos) {
     removePhotos();
     addPictures(allPhotos, getArrayPhoto(buttonFilter, allPhotos));
   };
@@ -63,23 +63,25 @@
       }
       return popularPhotos;
     } else if (buttonFilter.id === 'filter-new') {
-        var newPhotos = [];
-        while (newPhotos.length < 10) {
-          newPhotos = getArrayRandomPhoto(allPhotos, newPhotos);
-          newPhotos = newPhotos.filter(function (it, i) {
-            return newPhotos.indexOf(it) === i;
+      var newPhotos = [];
+      while (newPhotos.length < 10) {
+        newPhotos = getArrayRandomPhoto(allPhotos, newPhotos);
+        newPhotos = newPhotos.filter(function (it, i) {
+          return newPhotos.indexOf(it) === i;
         });
       }
       return newPhotos;
     } else if (buttonFilter.id === 'filter-discussed') {
-        var discussedPhotos = [];
-        for (var y = 0; y < COUNT_PHOTOS; y++) {
-          discussedPhotos.push(allPhotos[y]);
-        }
-        discussedPhotos.sort(function (first, second) {
-          return first.comments.length - second.comments.length;
-        });
+      var discussedPhotos = [];
+      for (var y = 0; y < COUNT_PHOTOS; y++) {
+        discussedPhotos.push(allPhotos[y]);
+      }
+      discussedPhotos.sort(function (first, second) {
+        return first.comments.length - second.comments.length;
+      });
       return discussedPhotos;
+    } else {
+      return allPhotos;
     }
   };
 
