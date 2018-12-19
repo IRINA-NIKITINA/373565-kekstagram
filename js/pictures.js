@@ -28,7 +28,7 @@
     if (typeof photos === 'undefined') {
       photos = allPhotos;
     }
-   
+
     for (var i = 0; i < photos.length; i++) {
       fragment.appendChild(generatePictures(template, photos[i]));
     }
@@ -73,31 +73,31 @@
 
   var getPopularPhotos = function (allPhotos) {
     var popularPhotos = [];
-      for (var i = 0; i < COUNT_PHOTOS; i++) {
-        popularPhotos.push(allPhotos[i]);
-      }
-      return popularPhotos;
+    for (var i = 0; i < COUNT_PHOTOS; i++) {
+      popularPhotos.push(allPhotos[i]);
+    }
+    return popularPhotos;
   };
 
   var getNewPhotos = function (allPhotos) {
     var newPhotos = [];
-      while (newPhotos.length < COUNT_NEW_PHOTOS) {
-        newPhotos = getArrayRandomPhoto(allPhotos, newPhotos);
-        newPhotos = newPhotos.filter(function (it, k) {
-          return newPhotos.indexOf(it) === k;
-        });
-      }
-      return newPhotos;
+    while (newPhotos.length < COUNT_NEW_PHOTOS) {
+      newPhotos = getArrayRandomPhoto(allPhotos, newPhotos);
+      newPhotos = newPhotos.filter(function (it, k) {
+        return newPhotos.indexOf(it) === k;
+      });
+    }
+    return newPhotos;
   };
 
   var getDiscussedPhotos = function (allPhotos) {
     var discussedPhotos = [];
-      for (var y = 0; y < COUNT_PHOTOS; y++) {
-        discussedPhotos.push(allPhotos[y]);
-      }
-      discussedPhotos.sort(function (first, second) {
-        return second.comments.length - first.comments.length;
-      });
+    for (var y = 0; y < COUNT_PHOTOS; y++) {
+      discussedPhotos.push(allPhotos[y]);
+    }
+    discussedPhotos.sort(function (first, second) {
+      return second.comments.length - first.comments.length;
+    });
     return discussedPhotos;
   };
 
