@@ -20,6 +20,8 @@
       addComments(photo.comments.length, photo);
       bigPicture.querySelector('.social__comment-count').innerHTML = commentCount.replace(commentCount.charAt(0), photo.comments.length);
     }
+
+    bigPicture.querySelector('.comments-loader').classList.add('hidden');
   }
 
   var generateComment = function (templ, comment) {
