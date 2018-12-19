@@ -3,6 +3,7 @@
 (function () {
   var COUNT_PHOTOS = 25;
   var COUNT_NEW_PHOTOS = 10;
+  var photos = [];
   var pictures = document.querySelector('.pictures');
   var imgFilters = document.querySelector('.img-filters');
   var buttonsFilters = imgFilters.querySelectorAll('.img-filters__button');
@@ -17,17 +18,14 @@
 
   var loadPictures = function (allPhotos) {
     imgFilters.classList.remove('img-filters--inactive');
-    addPictures(allPhotos);
-    addButtonClick(allPhotos);
+    photos = allPhotos;
+    updatePhotos();
+    addButtonClick();
   };
 
   var addPictures = function (allPhotos, photos) {
     var template = document.querySelector('#picture').content.querySelector('a');
     var fragment = document.createDocumentFragment();
-
-    if (typeof photos === 'undefined') {
-      photos = allPhotos;
-    }
 
     for (var i = 0; i < photos.length; i++) {
       fragment.appendChild(generatePictures(template, photos[i]));
@@ -36,7 +34,7 @@
     window.preview.openAndFillBigPicture(photos);
   };
 
-  var onButtonClick = function (buttonFilter, allPhotos) {
+  var onButtonClick = function (buttonFilter) {
     buttonFilter.addEventListener('click', function () {
       buttonFilter.classList.add('img-filters__button--active');
       for (var i = 0; i < buttonsFilters.length; i++) {
@@ -44,19 +42,27 @@
           buttonsFilters[i].classList.remove('img-filters__button--active');
         }
       }
-      window.util.debounce(updatePhotos(buttonFilter, allPhotos));
+      window.util.debounce(updatePhotos);
     });
   };
 
-  var addButtonClick = function (allPhotos) {
+  var addButtonClick = function () {
     for (var i = 0; i < buttonsFilters.length; i++) {
-      onButtonClick(buttonsFilters[i], allPhotos);
+      onButtonClick(buttonsFilters[i]);
     }
   };
 
-  var updatePhotos = function (buttonFilter, allPhotos) {
+  var getButtonActive = function () {
+    for (var i = 0; i < buttonsFilters.length; i++) {
+      if (buttonsFilters[i].classList.contains('img-filters__button--active'))
+        return buttonsFilters[i];
+    }
+    return null;
+  };
+
+  var updatePhotos = function () {
     removePhotos();
-    addPictures(allPhotos, getArrayPhoto(buttonFilter, allPhotos));
+    addPictures(photos, getArrayPhoto(getButtonActive(), photos));
   };
 
   var getArrayPhoto = function (buttonFilter, allPhotos) {
