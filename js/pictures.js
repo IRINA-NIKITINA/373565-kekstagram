@@ -23,15 +23,15 @@
     addButtonClick();
   };
 
-  var addPictures = function (allPhotos, photos) {
+  var addPictures = function (allPhotos, filterPhotos) {
     var template = document.querySelector('#picture').content.querySelector('a');
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < photos.length; i++) {
-      fragment.appendChild(generatePictures(template, photos[i]));
+    for (var i = 0; i < filterPhotos.length; i++) {
+      fragment.appendChild(generatePictures(template, filterPhotos[i]));
     }
     pictures.appendChild(fragment);
-    window.preview.openAndFillBigPicture(photos);
+    window.preview.openAndFillBigPicture(filterPhotos);
   };
 
   var onButtonClick = function (buttonFilter) {
@@ -54,8 +54,9 @@
 
   var getButtonActive = function () {
     for (var i = 0; i < buttonsFilters.length; i++) {
-      if (buttonsFilters[i].classList.contains('img-filters__button--active'))
+      if (buttonsFilters[i].classList.contains('img-filters__button--active')) {
         return buttonsFilters[i];
+      }
     }
     return null;
   };
