@@ -2,7 +2,7 @@
 
 (function () {
   var onLoad = function (allPhotos) {
-    window.pictures.loadPictures(allPhotos);
+    window.filters.loadPictures(allPhotos);
   };
 
   window.backend.load(onLoad, window.util.onError);
