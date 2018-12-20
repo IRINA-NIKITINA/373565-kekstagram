@@ -15,7 +15,7 @@
     addButtonClick();
   };
 
-    var onButtonClick = function (buttonFilter) {
+  var onButtonClick = function (buttonFilter) {
     buttonFilter.addEventListener('click', function () {
       buttonFilter.classList.add('img-filters__button--active');
       for (var i = 0; i < buttonsFilters.length; i++) {
