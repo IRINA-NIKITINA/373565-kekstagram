@@ -7,10 +7,22 @@
 
   var lastTimeout;
   var debounce = function (cb) {
+    var clearWaiting = function () {
+      lastTimeout = false;
+    };
+
+    var callbackWrapper = function () {
+      clearWaiting();
+      cb();
+    };
+
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
+      lastTimeout = window.setTimeout(callbackWrapper, DEBOUNCE_INTERVAL);
+    } else {
+      cb();
+      lastTimeout = window.setTimeout(clearWaiting, DEBOUNCE_INTERVAL);
     }
-    lastTimeout = window.setTimeout(cb, DEBOUNCE_INTERVAL);
   };
 
   var getRandInRange = function (min, max) {
