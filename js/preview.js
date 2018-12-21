@@ -2,7 +2,6 @@
 
 (function () {
   var MIN_COMMENTS = 5;
-
   var pictures = document.querySelector('.pictures');
   var bigPicture = document.querySelector('.big-picture');
 
