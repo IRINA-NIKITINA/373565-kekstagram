@@ -33,7 +33,12 @@
     });
 
     xhr.open('POST', URL);
-    xhr.send(data);
+    try {
+      xhr.send(data);
+    } catch (e) {
+      onError();
+      return;
+    }
   };
 
   window.backend = {

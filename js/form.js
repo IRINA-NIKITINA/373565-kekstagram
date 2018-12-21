@@ -139,6 +139,7 @@
       }
 
       imgUploadPreview.classList.add('effects__preview--' + effectName);
+      scale.setAttribute('value', MAX_PERCENT + '%');
 
       if (effectName === 'none') {
         document.querySelector('.effect-level').classList.add('hidden');
